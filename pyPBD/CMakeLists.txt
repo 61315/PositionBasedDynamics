@@ -21,8 +21,8 @@ set_target_properties(pypbd PROPERTIES
         RELWITHDEBINFO_POSTFIX ""
         MINSIZEREL_POSTFIX "")
 
-target_link_libraries(pypbd PRIVATE Simulation PositionBasedDynamics Utils ${Discregrid_LIBRARIES})
-add_dependencies(pypbd Simulation PositionBasedDynamics Utils Ext_GenericParameters Ext_Discregrid)
+target_link_libraries(pypbd PRIVATE Simulation PositionBasedDynamics Utils ${Discregrid_LIBRARIES} smplxpp)
+add_dependencies(pypbd Simulation PositionBasedDynamics Utils Ext_GenericParameters Ext_Discregrid smplxpp)
 
 add_custom_target(pypbd_install
         ${PYTHON_EXECUTABLE} setup.py bdist_wheel
