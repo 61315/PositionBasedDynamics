@@ -112,6 +112,8 @@ void RigidBodyModule(py::module m_sub)
         .def("setRestitutionCoeff", &PBD::RigidBody::setRestitutionCoeff)
         .def("getFrictionCoeff", &PBD::RigidBody::getFrictionCoeff)
         .def("setFrictionCoeff", &PBD::RigidBody::setFrictionCoeff)
+        .def("getName", &PBD::RigidBody::getName)
+        .def("setName", &PBD::RigidBody::setName)
         .def("getGeometry", &PBD::RigidBody::getGeometry)
     ;
 
