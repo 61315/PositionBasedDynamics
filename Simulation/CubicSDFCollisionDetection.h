@@ -38,7 +38,7 @@ namespace PBD
 		virtual bool isDistanceFieldCollisionObject(CollisionObject *co) const;
 
 		void addCubicSDFCollisionObject(const unsigned int bodyIndex, const unsigned int bodyType, const Vector3r *vertices, const unsigned int numVertices, const std::string &sdfFile, const Vector3r &scale, const bool testMesh = true, const bool invertSDF = false);
-		void addCubicSDFCollisionObject(const unsigned int bodyIndex, const unsigned int bodyType, const Vector3r *vertices, const unsigned int numVertices, GridPtr sdf, const Vector3r &scale, const bool testMesh = true, const bool invertSDF = false);
+		void addCubicSDFCollisionObject(const unsigned int bodyIndex, const unsigned int bodyType, const Vector3r *vertices, const unsigned int numVertices, GridPtr sdf, const Vector3r &scale, const bool testMesh = true, const bool invertSDF = false, const std::string &name = "co_sdf_default");
 	};
 }
 

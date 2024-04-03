@@ -38,7 +38,7 @@ void CubicSDFCollisionDetection::addCubicSDFCollisionObject(const unsigned int b
 	m_collisionObjects.push_back(co);
 }
 
-void PBD::CubicSDFCollisionDetection::addCubicSDFCollisionObject(const unsigned int bodyIndex, const unsigned int bodyType, const Vector3r *vertices, const unsigned int numVertices, GridPtr sdf, const Vector3r &scale, const bool testMesh /*= true*/, const bool invertSDF /*= false*/)
+void PBD::CubicSDFCollisionDetection::addCubicSDFCollisionObject(const unsigned int bodyIndex, const unsigned int bodyType, const Vector3r *vertices, const unsigned int numVertices, GridPtr sdf, const Vector3r &scale, const bool testMesh /*= true*/, const bool invertSDF /*= false*/, const std::string& name)
 {
 	CubicSDFCollisionDetection::CubicSDFCollisionObject *co = new CubicSDFCollisionDetection::CubicSDFCollisionObject();
 	co->m_bodyIndex = bodyIndex;
@@ -52,6 +52,7 @@ void PBD::CubicSDFCollisionDetection::addCubicSDFCollisionObject(const unsigned 
 	co->m_invertSDF = 1.0;
 	if (invertSDF)
 		co->m_invertSDF = -1.0;
+	co->m_name = name;
 	m_collisionObjects.push_back(co);
 }
 

@@ -38,9 +38,13 @@ namespace PBD
 			AABB m_aabb;
 			unsigned int m_bodyIndex;
 			unsigned int m_bodyType;
+			std::string m_name;
 
 			virtual ~CollisionObject() {}
 			virtual int &getTypeId() const = 0;
+
+			const std::string& getName() const { return m_name; }
+    		void setName(const std::string& name) { m_name = name; }
 		};
 
 		struct CollisionObjectWithoutGeometry : public CollisionObject

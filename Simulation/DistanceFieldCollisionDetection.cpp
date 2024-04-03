@@ -583,7 +583,7 @@ void DistanceFieldCollisionDetection::addCollisionHollowBox(const unsigned int b
 	m_collisionObjects.push_back(cf);
 }
 
-void DistanceFieldCollisionDetection::addCollisionObjectWithoutGeometry(const unsigned int bodyIndex, const unsigned int bodyType, const Vector3r *vertices, const unsigned int numVertices, const bool testMesh)
+void DistanceFieldCollisionDetection::addCollisionObjectWithoutGeometry(const unsigned int bodyIndex, const unsigned int bodyType, const Vector3r *vertices, const unsigned int numVertices, const bool testMesh, const std::string& name)
 {
 	DistanceFieldCollisionObjectWithoutGeometry *co = new DistanceFieldCollisionObjectWithoutGeometry();
 	co->m_bodyIndex = bodyIndex;
@@ -592,6 +592,7 @@ void DistanceFieldCollisionDetection::addCollisionObjectWithoutGeometry(const un
 	co->m_bvh.construct();
 	co->m_testMesh = testMesh;
 	co->m_invertSDF = 1.0;
+	co->m_name = name;
 	m_collisionObjects.push_back(co);
 }
 
