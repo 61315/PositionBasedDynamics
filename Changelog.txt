@@ -1,3 +1,15 @@
+2.2.1 (smpl)
+	- feat: add name and accesors to rigidbody
+	- feat: add name and accesors to collisionobject
+	- feat: add thickness to triangle model
+	- feat: add batch query interface to sdf collision detector
+	- build: introduce smpl lib
+	- build: update python interface
+	- chore: add sample garment assets
+	- docs: add smpl collision cpp demo
+	- docs: add smpl collision python demo
+	- docs: update readme
+
 2.2.1	
 	- bugfix in XPBD FEM code
 	- updated GenericParameters
