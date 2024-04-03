@@ -28,6 +28,10 @@ namespace PBD
 			virtual ~CubicSDFCollisionObject();
 			virtual int &getTypeId() const { return TYPE_ID; }
 			virtual bool collisionTest(const Vector3r &x, const Real tolerance, Vector3r &cp, Vector3r &n, Real &dist, const Real maxDist = 0.0);
+			virtual bool collisionTestBatch(const std::vector<Vector3r> &x_batch,
+											const Real tolerance, std::vector<Vector3r> &cp,
+											std::vector<Vector3r> &n, std::vector<Real> &dist,
+											const Real maxDist = 0.0);
 			virtual double distance(const Eigen::Vector3d &x, const Real tolerance);
 		};
 

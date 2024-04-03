@@ -97,3 +97,43 @@ bool CubicSDFCollisionDetection::CubicSDFCollisionObject::collisionTest(const Ve
 	return false;
 }
 
+bool CubicSDFCollisionDetection::CubicSDFCollisionObject::collisionTestBatch(const std::vector<Vector3r> &x_batch, const Real tolerance, std::vector<Vector3r> &cp, std::vector<Vector3r> &n, std::vector<Real> &dist, const Real maxDist)
+{
+    bool collision = false;
+    const int size = x_batch.size();
+    cp.resize(size);
+    n.resize(size);
+    dist.resize(size);
+
+    #pragma omp parallel for
+    for (int i = 0; i < size; ++i)
+    {
+        const Vector3r &x = x_batch[i];
+        // Vector3r &cp_single = cp[i];
+        Vector3r &n_single = n[i];
+        Real &dist_single = dist[i];
+
+        const Vector3r scaled_x = x.cwiseProduct(m_scale.cwiseInverse());
+
+        Eigen::Vector3d normal;    
+        double d = m_sdf->interpolate(0, scaled_x.template cast<double>(), &normal);
+        if (d == std::numeric_limits<Real>::max())
+        {
+            dist_single = std::numeric_limits<Real>::infinity();
+            n_single = Vector3r(0, 0, 0);
+        } else {
+            dist_single = static_cast<Real>(m_invertSDF * d - tolerance);
+        }
+
+        normal = m_invertSDF * normal;
+        if (dist_single < maxDist)
+        {
+            normal.normalize();
+            n_single = normal.template cast<Real>();
+
+            // cp_single = (scaled_x - dist_single * n_single);
+            // cp_single = cp_single.cwiseProduct(m_scale);
+        }
+    }
+    return collision;
+}
