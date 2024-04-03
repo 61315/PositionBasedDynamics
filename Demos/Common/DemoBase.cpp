@@ -608,19 +608,24 @@ void DemoBase::renderTriangleModels()
 {
 	SimulationModel *model = Simulation::getCurrent()->getModel();
 	const ParticleData &pd = model->getParticles();
-	float surfaceColor[4] = { 0.8f, 0.9f, 0.2f, 1 };
-
-	shaderTexBegin(surfaceColor);
+	// float surfaceColor[4] = { 0.8f, 0.9f, 0.2f, 1 };
+	float colors[4][4] = {
+		{0.8f, 0.9f, 0.2f, 1},
+		{0.2f, 0.8f, 0.9f, 1},
+		{0.9f, 0.2f, 0.8f, 1},
+		{0.8f, 0.2f, 0.9f, 1}
+	};
 
 	for (unsigned int i = 0; i < model->getTriangleModels().size(); i++)
 	{
+		float* surfaceColor = colors[i % 4];
+		shaderTexBegin(surfaceColor);
 		// mesh 
 		const IndexedFaceMesh &mesh = model->getTriangleModels()[i]->getParticleMesh();
 		const unsigned int offset = model->getTriangleModels()[i]->getIndexOffset();
 		Visualization::drawTexturedMesh(pd, mesh, offset, surfaceColor);
+		shaderTexEnd();
 	}
-
-	shaderTexEnd();
 }
 
 void DemoBase::renderTetModels()
@@ -949,7 +954,7 @@ void DemoBase::loadMesh(const std::string& filename, VertexData& vd, Utilities::
 		vd.reserve(nPoints);
 		for (unsigned int i = 0; i < nPoints; i++)
 		{
-			vd.addVertex(Vector3r(x[i][0], x[i][1], x[i][2]));
+			vd.addVertex(Vector3r(x[i][0], x[i][1], x[i][2]) + translation);
 		}
 		for (unsigned int i = 0; i < nTexCoords; i++)
 		{
