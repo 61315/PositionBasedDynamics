@@ -74,6 +74,8 @@ namespace PBD
 			Vector3r m_transformation_v1;
 			Vector3r m_transformation_v2;
 			Vector3r m_transformation_R_X_v1;
+
+			std::string m_name;
 			
 		public:
 			RigidBody(void) 
@@ -115,6 +117,8 @@ namespace PBD
 				m_restitutionCoeff = static_cast<Real>(0.6);
 				m_frictionCoeff = static_cast<Real>(0.2);
 
+				m_name = "rb_default";
+
 				getGeometry().initMesh(vertices.size(), mesh.numFaces(), &vertices.getPosition(0), mesh.getFaces().data(), mesh.getUVIndices(), mesh.getUVs(), scale, mesh.getFlatShading());
 				getGeometry().updateMeshTransformation(getPosition(), getRotationMatrix());
 			}
@@ -144,6 +148,8 @@ namespace PBD
 
 				m_restitutionCoeff = static_cast<Real>(0.6);
 				m_frictionCoeff = static_cast<Real>(0.2);
+
+				m_name = "rb_default";
 
 				getGeometry().initMesh(vertices.size(), mesh.numFaces(), &vertices.getPosition(0), mesh.getFaces().data(), mesh.getUVIndices(), mesh.getUVs(), scale, mesh.getFlatShading());
 				determineMassProperties(density);
@@ -622,6 +628,14 @@ namespace PBD
 			RigidBodyGeometry& getGeometry()
 			{
 				return m_geometry;
+			}
+
+			FORCE_INLINE void setName(const std::string& name) { 
+				m_name = name;
+			}
+
+			FORCE_INLINE std::string getName() const { 
+				return m_name;
 			}
 	};
 }
