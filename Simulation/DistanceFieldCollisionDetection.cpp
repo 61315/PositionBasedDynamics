@@ -133,9 +133,10 @@ void DistanceFieldCollisionDetection::collisionDetection(SimulationModel &model)
 				const unsigned int numVert = mesh.numVertices();
 				const Real restitutionCoeff = tm->getRestitutionCoeff() * rb2->getRestitutionCoeff();
 				const Real frictionCoeff = tm->getFrictionCoeff() + rb2->getFrictionCoeff();
+				const Real thickness = tm->getThickness();
 				collisionDetectionRBSolid(pd, offset, numVert, (DistanceFieldCollisionObject*)co1, rb2, (DistanceFieldCollisionObject*)co2,
 					restitutionCoeff, frictionCoeff
-					, contacts_mt
+					, contacts_mt, thickness
 					);
 			}
 			else if ((co1->m_bodyType == CollisionDetection::CollisionObject::TetModelCollisionObjectType) && 
@@ -282,7 +283,7 @@ void DistanceFieldCollisionDetection::collisionDetectionRigidBodies(RigidBody *r
 void DistanceFieldCollisionDetection::collisionDetectionRBSolid(const ParticleData &pd, const unsigned int offset, const unsigned int numVert,
 	DistanceFieldCollisionObject *co1, RigidBody *rb2, DistanceFieldCollisionObject *co2, 
 	const Real restitutionCoeff, const Real frictionCoeff
-	, std::vector<std::vector<ContactData> > &contacts_mt
+	, std::vector<std::vector<ContactData> > &contacts_mt, const Real thickness
 	)
 {
 	const Vector3r &com2 = rb2->getPosition();
@@ -318,7 +319,7 @@ void DistanceFieldCollisionDetection::collisionDetectionRBSolid(const ParticleDa
 		{
 			// Test if distance of center of bounding sphere to collision object is smaller than the radius
 			const Vector3r x = R * (sphere_x_w - com2) + v1;
-			const double dist2 = co2->distance(x.template cast<double>(), m_tolerance);
+			const double dist2 = co2->distance(x.template cast<double>(), m_tolerance + thickness);
 			if (dist2 == std::numeric_limits<double>::max())
 				return true;
 			if (dist2 < bs.r())
@@ -340,7 +341,7 @@ void DistanceFieldCollisionDetection::collisionDetectionRBSolid(const ParticleDa
 			const Vector3r x = R * (x_w - com2) + v1;
 			Vector3r cp, n;
 			Real dist;
-			if (co2->collisionTest(x, m_tolerance, cp, n, dist))
+			if (co2->collisionTest(x, m_tolerance + thickness, cp, n, dist))
 			{
 				const Vector3r cp_w = R.transpose() * cp + v2;
 				const Vector3r n_w = R.transpose() * n;

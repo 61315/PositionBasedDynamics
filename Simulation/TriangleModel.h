@@ -26,6 +26,8 @@ namespace PBD
 			Real m_restitutionCoeff;
 			Real m_frictionCoeff;
 
+			Real m_thickness;
+
 		public:
 			ParticleMesh &getParticleMesh() { return m_particleMesh; }
 			const ParticleMesh& getParticleMesh() const { return m_particleMesh; }
@@ -55,6 +57,16 @@ namespace PBD
 			FORCE_INLINE void setFrictionCoeff(Real val)
 			{
 				m_frictionCoeff = val;
+			}
+
+			FORCE_INLINE Real getThickness() const
+			{ 
+				return m_thickness;
+			}
+
+			FORCE_INLINE void setThickness(Real val)
+			{
+				m_thickness = val;
 			}
 	};
 }

@@ -130,7 +130,7 @@ namespace PBD
 		void collisionDetectionRBSolid(const ParticleData &pd, const unsigned int offset, const unsigned int numVert, 
 			DistanceFieldCollisionObject *co1, RigidBody *rb2, DistanceFieldCollisionObject *co2, 
 			const Real restitutionCoeff, const Real frictionCoeff
-			, std::vector<std::vector<ContactData> > &contacts_mt
+			, std::vector<std::vector<ContactData> > &contacts_mt, const Real thickness = 0.0
 			);
 
 		void collisionDetectionSolidSolid(const ParticleData &pd, const unsigned int offset, const unsigned int numVert,
